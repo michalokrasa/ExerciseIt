@@ -1,0 +1,54 @@
+#background {
+    position: fixed;
+    left: 50vw;
+    top: 50vh;
+    z-index: -1;
+    font-size: 600px;
+}
+
+@keyframes slide-in-bottom {
+    from {
+        top: 250px;
+        opacity: 0;
+    }
+    to {
+        top: 50px;
+        opacity: 0.2;
+    }
+}
+
+
+#left-book {
+    position: absolute;
+    left: -800px;
+    top: 50px;
+    opacity: 0.2;
+    animation-name: slide-in-bottom;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0.5s;
+    animation-fill-mode: backwards;
+}
+
+@keyframes slide-in-top {
+    from {
+        top: -700px;
+        opacity: 0;
+    }
+    to {
+        top: -500px;
+        opacity: 0.2;
+    }
+}
+
+ #right-book {
+    position: absolute;
+    left: 100px;
+    top: -500px;
+    opacity: 0.2;
+    animation-name: slide-in-top;
+    animation-duration: 2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0.5s;
+    animation-fill-mode: backwards;
+}

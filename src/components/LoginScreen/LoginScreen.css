@@ -1,0 +1,21 @@
+main {
+    width: 50vw;
+    height: 70vh;
+    margin: auto;
+    margin-top: 10vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #343a40;
+}
+
+#logo {
+    width: 50%;
+    font-size: 200px;
+}
+
+label {
+    color: green;
+}
