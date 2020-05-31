@@ -8,7 +8,7 @@
 
 @keyframes slide-in-bottom {
     from {
-        top: 100vh;
+        bottom: 100vh;
         opacity: 0;
     }
     to {

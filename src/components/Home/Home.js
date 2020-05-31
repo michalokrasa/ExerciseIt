@@ -16,9 +16,9 @@ const Home = props => (
                 <img src={logo} className={styles.brandLogo} alt='ExerciseIt logo' width='28px' height='28px' />
                 <span className={styles.brandText}>ExerciseIt</span>
             </span>
-            <span className={styles.navButtons}>
-                <Link to='/login' className='btn btn-outline-success'>Sign In</Link>
-                <Link to='/register' className='btn btn-outline-success ml-2'>Register</Link>
+            <span className={styles.navButtonsContainer}>
+                <Link to='/login' className={`btn btn-outline-success ${styles.navButton}`}>Sign In</Link>
+                <Link to='/register' className={`btn btn-outline-success ml-2 ${styles.navButton}`}>Register</Link>
             </span>
         </nav>
         <div className={styles.center}>
