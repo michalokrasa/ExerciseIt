@@ -4,18 +4,16 @@ import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-ro
 
 import Home from '../Home';
 import Dashboard from '../Dashboard';
-import LoginScreen from '../LoginScreen/LoginScreen';
-import RegisterScreen from '../RegisterScreen';
+import AuthenticationScreen from '../AuthenticationScreen';
 
-import Auth from '../../helpers/Auth';
 
 const App = props => {
     return (
         <Router>
             <Switch>
                 <Route exact path='/' component={Home} />
-                <Route path='/login' component={LoginScreen}/>
-                <Route path='/register' component={RegisterScreen}/>
+                <Route path='/login' component={AuthenticationScreen}/>
+                <Route path='/register' component={AuthenticationScreen}/>
                 <Route path='/:userName' component={Dashboard}/>
             </Switch>
         </Router>

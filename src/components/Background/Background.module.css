@@ -1,4 +1,4 @@
-#background {
+.background {
     position: fixed;
     left: 50vw;
     top: 50vh;
@@ -8,7 +8,7 @@
 
 @keyframes slide-in-bottom {
     from {
-        top: 250px;
+        top: 100vh;
         opacity: 0;
     }
     to {
@@ -18,13 +18,13 @@
 }
 
 
-#left-book {
+.leftBook {
     position: absolute;
     left: -800px;
     top: 50px;
     opacity: 0.2;
     animation-name: slide-in-bottom;
-    animation-duration: 2s;
+    animation-duration: 5s;
     animation-timing-function: ease-out;
     animation-delay: 0.5s;
     animation-fill-mode: backwards;
@@ -32,7 +32,7 @@
 
 @keyframes slide-in-top {
     from {
-        top: -700px;
+        top: -100vh;
         opacity: 0;
     }
     to {
@@ -41,13 +41,13 @@
     }
 }
 
- #right-book {
+ .rightBook {
     position: absolute;
     left: 100px;
     top: -500px;
     opacity: 0.2;
     animation-name: slide-in-top;
-    animation-duration: 2s;
+    animation-duration: 5s;
     animation-timing-function: ease-out;
     animation-delay: 0.5s;
     animation-fill-mode: backwards;

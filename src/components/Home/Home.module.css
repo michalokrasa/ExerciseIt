@@ -1,0 +1,98 @@
+.center {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 74px;
+}
+
+.brandText {
+    font-size: 32px;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+.brandLogo {
+    filter: invert(100);
+}
+
+.navButtons {
+    display: none;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    font-size: 32px;
+}
+
+.emphasis {
+    font-weight: bold;
+    font-style: italic;
+}
+
+.title {
+    font-size: 1em;
+    text-align: center;
+    
+}
+
+.titleIcon {
+    font-size: 80px;
+    text-align: center;
+}
+
+.mainButtonsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    font-size: 0.5em;
+}
+
+.mainButton {
+    font-size: 1em;
+    width: 200px;
+    margin: 15px 10px;
+}
+
+
+@media (min-width: 360px) {
+    .mainContainer {
+        font-size: 24px;
+    }
+}
+
+@media (min-width: 481px) {
+    .navButtons {
+        display: block;
+    }
+
+    .mainContainer {
+        font-size: 54px;
+    }
+}
+
+@media (min-width: 769px) {
+    .mainContainer {
+        font-size: 42px;
+    }
+
+    .titleIcon {
+        font-size: 150px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .mainContainer {
+        font-size: 42px;
+    }
+
+    .titleIcon {
+        font-size: 100px;
+    }
+}
