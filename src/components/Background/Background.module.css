@@ -1,18 +1,18 @@
 .background {
     position: fixed;
-    left: 50vw;
-    top: 50vh;
+    width: 100%;
+    height: 100%;
     z-index: -1;
     font-size: 600px;
 }
 
 @keyframes slide-in-bottom {
     from {
-        bottom: 100vh;
+        top: 100vh;
         opacity: 0;
     }
     to {
-        top: 50px;
+        top: 50vh;
         opacity: 0.2;
     }
 }
@@ -20,34 +20,34 @@
 
 .leftBook {
     position: absolute;
-    left: -800px;
-    top: 50px;
+    left: -200px;
+    top: 50vh;
     opacity: 0.2;
     animation-name: slide-in-bottom;
-    animation-duration: 5s;
-    animation-timing-function: ease-out;
+    animation-duration: 2s;
     animation-delay: 0.5s;
+    animation-timing-function: ease-out;
     animation-fill-mode: backwards;
 }
 
 @keyframes slide-in-top {
     from {
-        top: -100vh;
+        top: -90vh;
         opacity: 0;
     }
     to {
-        top: -500px;
+        top: -40vh;
         opacity: 0.2;
     }
 }
 
  .rightBook {
     position: absolute;
-    left: 100px;
-    top: -500px;
+    right: -200px;
+    top: -40vh;
     opacity: 0.2;
     animation-name: slide-in-top;
-    animation-duration: 5s;
+    animation-duration: 2s;
     animation-timing-function: ease-out;
     animation-delay: 0.5s;
     animation-fill-mode: backwards;
