@@ -78,6 +78,10 @@
         display: block;
     }
 
+    .mainButtonsContainer {
+        display: none;
+    }
+
     .mainContainer {
         font-size: 54px;
     }

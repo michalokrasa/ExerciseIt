@@ -48,6 +48,11 @@
     margin-left: 15px;
 }
 
+.errorMessage {
+    color: red;
+    margin-top: 0.5em;
+}
+
 @media (min-width: 481px) {
     .logo {
         font-size: 200px;
