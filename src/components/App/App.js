@@ -18,7 +18,7 @@ const App = props => {
                     <Route exact path='/login' component={AuthenticationScreen}/>
                     <Route exact path='/register' component={AuthenticationScreen}/>
                     <PrivateRoute path='/:userName' component={Dashboard}/>
-                    <Redirect to='/'/>
+                    <Redirect path='*' to='/'/>
                 </Switch>
             </HashRouter>
         </AuthContextProvider>

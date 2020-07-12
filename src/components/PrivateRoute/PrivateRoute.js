@@ -7,7 +7,7 @@ import { useAuthContext } from '../../contexts/AuthContext';
 // A wrapper for <Route> that redirects to the login
 // screen if you're not yet authenticated.
 const PrivateRoute = ({ component, computedMatch, ...rest }) => {
-    const { authState, authDispatch } = useAuthContext();
+    const [ authState, authDispatch ] = useAuthContext();
 
     useEffect(() => {
         const localUser = JSON.parse(localStorage.getItem('user'));

@@ -11,7 +11,7 @@ import Background from '../Background';
 import styles from './AuthenticationScreen.module.css'
 
 const AuthenticationScreen = ({ match }) => {
-    const { authState, authDispatch } = useAuthContext();
+    const [ authState, authDispatch ] = useAuthContext();
     const { register, handleSubmit, errors, getValues, reset } = useForm({ mode: 'onBlur'});
     const onSubmit = data => { 
         // change url to const from config/const.js

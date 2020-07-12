@@ -46,7 +46,8 @@ const useAuthContext = () => {
     if (context === undefined) {
         throw new Error('useAuthContext must be used within a AuthContextProvider');
     }
-    return context;
+
+    return [context.authState, context.authDispatch];
 }
 
 const AuthContextProvider = ({ children }) => {
