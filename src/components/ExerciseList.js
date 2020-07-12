@@ -3,74 +3,74 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const Exercise = props => (
-	<tr>
-		<td>{props.exercise.user.username}</td>
-		<td>{props.exercise.description}</td>
-		<td>{props.exercise.duration}</td>
-		<td>{props.exercise.date.substring(0, 10)}</td>
-		<td>
-			<Link to={`/edit/${props.exercise._id}`}>edit</Link> | <a href='#' onClick={() => props.deleteExercise(props.exercise._id)}>delete</a>
-		</td>
-	</tr>
+    <tr>
+        <td>{props.exercise.user.username}</td>
+        <td>{props.exercise.description}</td>
+        <td>{props.exercise.duration}</td>
+        <td>{props.exercise.date.substring(0, 10)}</td>
+        <td>
+            <Link to={`/edit/${props.exercise._id}`}>edit</Link> | <a href='#' onClick={() => props.deleteExercise(props.exercise._id)}>delete</a>
+        </td>
+    </tr>
 )
 
 export default class ExerciseList extends Component {
-	constructor(props) {
-		super(props);
+    constructor(props) {
+        super(props);
 
-		this.deleteExercise = this.deleteExercise.bind(this);
+        this.deleteExercise = this.deleteExercise.bind(this);
 
-		this.state = {
-			exercises: []
-		}
-	}
+        this.state = {
+            exercises: []
+        }
+    }
 
-	componentDidMount() {
-		axios.get('http://localhost:8080/api/exercise')
-			.then(res => {
-				this.setState({
-					exercises: res.data
-				});
-			})
-			.catch(err => console.error(err));
-	}
+    componentDidMount() {
+        axios.get('http://localhost:8080/api/exercise')
+            .then(res => {
+                this.setState({
+                    exercises: res.data
+                });
+            })
+            .catch(err => console.error(err));
+    }
 
-	deleteExercise(id) {
-		axios.delete(`http://localhost:8080/api/exercise/${id}`)
-			.then(res => {
-				console.log(res)
-				this.setState({
-					exercises: this.state.exercises.filter(e => e._id !== id)
-				});
-			})
-			.catch(err => console.error(err));
-	}
+    deleteExercise(id) {
+        axios.delete(`http://localhost:8080/api/exercise/${id}`)
+            .then(res => {
+                console.log(res)
+                this.setState({
+                    exercises: this.state.exercises.filter(e => e._id !== id)
+                });
+            })
+            .catch(err => console.error(err));
+    }
 
-	exerciseList() {
-		return this.state.exercises.map(el => {
-			return <Exercise exercise={el} deleteExercise={this.deleteExercise} key={el._id}/>
-		});
-	}
+    exerciseList() {
+        return this.state.exercises.map(el => {
+            return <Exercise exercise={el} deleteExercise={this.deleteExercise} key={el._id} />
+        });
+    }
 
-	render() {
-		return (
-			<div>
-				<h3>Logged Exercises</h3>
-				<table className='table'>
-					<thead className='thead-light'>
-						<tr>
-							<th>Username</th>
-							<th>Description</th>
-							<th>Duration</th>
-							<th>Date</th>
-							<th>Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						{ this.exerciseList() }
-					</tbody>
-				</table>
-			</div>
-		);
-	}
+    render() {
+        return (
+            <div>
+                <h3>Logged Exercises</h3>
+                <table className='table'>
+                    <thead className='thead-light'>
+                        <tr>
+                            <th>Username</th>
+                            <th>Description</th>
+                            <th>Duration</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.exerciseList()}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
 }

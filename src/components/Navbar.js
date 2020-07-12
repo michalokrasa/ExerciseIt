@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
- 
+import { useAuthContext } from  '../contexts/AuthContext';
+
 const Navbar = props => {
+    const { authDispatch } = useAuthContext();
+
     return (
         <nav className='navbar navbar-dark bg-dark navbar-expand'>
             <Link to={`/${props.match.params.userName}`} className='navbar-brand'>ExerciseIt</Link>
@@ -17,6 +20,7 @@ const Navbar = props => {
                         <Link to={`/${props.match.params.userName}/user`} className='nav-link'>Create User</Link>
                     </li>
                 </ul>
+                <Link to='/' onClick={() => authDispatch({type: 'LOGOUT'})} className={`btn btn-outline-success`}>Sign Out</Link>
             </div>
         </nav>
     );

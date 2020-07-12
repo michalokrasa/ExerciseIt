@@ -24,7 +24,8 @@ export default class CreateUser extends Component {
 		const user = {
 			username: this.state.username,
 		}
-		
+        
+        // change url to const from config/const.js
 		axios.post('http://localhost:8080/api/user', user)
 			.then(res => console.log(res.data))
 			.catch(err => console.error(err));

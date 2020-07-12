@@ -3,15 +3,40 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBookOpen } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useForm, ErrorMessage } from 'react-hook-form';
+import axios from 'axios';
+import { useAuthContext } from '../../contexts/AuthContext';
+import { Redirect } from 'react-router-dom';
 
 import Background from '../Background'; 
 import styles from './AuthenticationScreen.module.css'
 
-const LoginScreen = ({ match }) => {
-    const { register, handleSubmit, errors, getValues } = useForm();
-    const onSubmit = data => console.log(data);
+const AuthenticationScreen = ({ match }) => {
+    const { authState, authDispatch } = useAuthContext();
+    const { register, handleSubmit, errors, getValues, reset } = useForm({ mode: 'onBlur'});
+    const onSubmit = data => { 
+        // change url to const from config/const.js
+        axios.post(`http://localhost:8080/api/auth${match.url}`, data)
+            .then(res => {
+                const { user, id, accessToken, refreshToken } = res.data;
+
+                authDispatch({
+                    type: 'LOGIN',
+                    payload: { user, id, accessToken, refreshToken }
+                });
+            })
+            .catch(err => {
+                reset({ password: '' });
+            });
+
+    };
 
     return (
+        authState.isAuthenticated ?
+        <Redirect
+            to={{
+                pathname: `/${authState.user}`,
+            }}
+        /> : 
         <div className={styles.center}>
             <main className={styles.mainContainer}>
                 <FontAwesomeIcon className={styles.logo} icon={faBookOpen}/>
@@ -30,6 +55,7 @@ const LoginScreen = ({ match }) => {
                             placeholder='Enter username'
                             required
                             className='form-control'
+                            autoComplete='username'
                             />
                         <div className={styles.errorMessage} >
                             <ErrorMessage name='username' errors={errors}/>
@@ -49,6 +75,7 @@ const LoginScreen = ({ match }) => {
                             placeholder='Enter password'
                             required
                             className='form-control'
+                            autoComplete={match.url === '/register' ? 'new-password' : 'current-password'}
                         />
                         <div className={styles.errorMessage} >
                             <ErrorMessage name='password' errors={errors} />
@@ -67,6 +94,7 @@ const LoginScreen = ({ match }) => {
                                 placeholder='Confirm password'
                                 required
                                 className='form-control'
+                                autoComplete='new-password'
                             />
                             <div className={styles.errorMessage} >
                                 <ErrorMessage name='passwordConfirm' errors={errors} />
@@ -108,4 +136,4 @@ const SubmitSection = ({url}) => {
     
 }
 
-export default LoginScreen;
+export default AuthenticationScreen;
