@@ -15,6 +15,7 @@ const authContextReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
             localStorage.setItem('user', JSON.stringify(action.payload.user));
+            localStorage.setItem('userId', JSON.stringify(action.payload.id));
             localStorage.setItem('accessToken', JSON.stringify(action.payload.accessToken));
             localStorage.setItem('refreshToken', JSON.stringify(action.payload.refreshToken));
             return {

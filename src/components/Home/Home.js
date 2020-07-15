@@ -11,7 +11,7 @@ import logo from '../../assets/img/knowledge.svg';
 
 
 const Home = props => {
-    const { authState } = useAuthContext();
+    const [ authState ] = useAuthContext();
 
     return (
         authState.isAuthenticated ?
