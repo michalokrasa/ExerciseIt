@@ -45,13 +45,15 @@ const PrivateRoute = ({ component, computedMatch, ...rest }) => {
     });
 
     return (
-        authState.isAuthenticated && computedMatch.params.userName === authState.user ? (
-            <Route component={component} {...rest} />
-        ) : (
-                <Redirect to={{
-                    pathname: '/login'
-                }} />
-            )
+    //     authState.isAuthenticated && computedMatch.params.userName === authState.user ? (
+    //         <Route component={component} {...rest} />
+    //     ) : (
+    //             <Redirect to={{
+    //                 pathname: '/login'
+    //             }} />
+    //         )
+    // )
+        <Route component={component} {...rest} />
     )
 };
 
