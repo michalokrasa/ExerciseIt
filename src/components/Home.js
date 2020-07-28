@@ -11,7 +11,9 @@ import {
     Typography,
     Button,
     AppBar,
-    Toolbar
+    Toolbar,
+    useScrollTrigger,
+    useMediaQuery
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -41,10 +43,11 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         textAlign: "center",
-        [theme.breakpoints.up("xs")]: {
-            fontSize: theme.typography.h4.fontSize
-        },
+        fontSize: theme.typography.h4.fontSize,
         [theme.breakpoints.up("sm")]: {
+            fontSize: theme.typography.h3.fontSize
+        },
+        [theme.breakpoints.up("md")]: {
             fontSize: theme.typography.h2.fontSize
         },
     },
@@ -82,18 +85,45 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
     },
     appBarButtons: {
-        margin: theme.spacing(1),
-        borderRadius: "25px"
+        borderRadius: "25px",
+        fontSize: "0.8rem",
+        [theme.breakpoints.up("sm")]: {
+            fontSize: "1rem",
+            margin: theme.spacing(1)
+        }
     },
     logoText: {
-        fontSize: "3rem"
-    },
-    logoIcon: {
-        fontSize: "3rem",
-        color: theme.palette.primary.main,
-        paddingTop: 10
+        fontSize: "1.2rem",
+        [theme.breakpoints.up("sm")]: {
+            fontSize: "2rem"
+        },
+        [theme.breakpoints.up("md")]: {
+            fontSize: "3rem"
+        }
     }
 }));
+
+const ElevationScroll = ({ children }) => {
+    const trigger = useScrollTrigger({
+      disableHysteresis: true,
+      threshold: 0
+    });
+  
+    return React.cloneElement(children, {
+      elevation: trigger ? 4 : 0,
+      color: trigger ? "inherit" : "transparent",
+    });
+}
+
+const ResponsiveButton = (props) => {
+    const isSmallScreen = useMediaQuery(theme => theme.breakpoints.down("xs"), {noSsr: true});
+    
+    return (
+        <Button {...props} variant={isSmallScreen ? "text" : "contained"}>
+          {props.children}
+        </Button>
+    );
+};
 
 
 const Home = props => {
@@ -101,24 +131,23 @@ const Home = props => {
 
     return (
         <>
-        <AppBar elevation={0} color="transparent">
-            <Toolbar className={classes.appBarContainer}>
-                <Typography className={classes.logoText}>
-                    ExerciseIT
-                </Typography>
-                <div className={classes.logoIcon}>
-                    <FontAwesomeIcon icon={faBookOpen}/>
-                </div>
-                <div>
-                    <Button className={classes.appBarButtons} size="large" variant="contained" color="secondary" component={Link} to="/signup">
-                        Sign Up
-                    </Button>
-                    <Button className={classes.appBarButtons} size="large" variant="contained" color="secondary" component={Link} to="/signin">
-                        Sign In
-                    </Button>
-                </div>
-            </Toolbar>
-        </AppBar>
+        <ElevationScroll>
+            <AppBar elevation={0} color="transparent">
+                <Toolbar className={classes.appBarContainer}>
+                    <Typography className={classes.logoText}>
+                        ExerciseIT
+                    </Typography>
+                    <div>
+                        <ResponsiveButton className={classes.appBarButtons} color="secondary" component={Link} to="/signup">
+                            Sign Up
+                        </ResponsiveButton>
+                        <ResponsiveButton className={classes.appBarButtons} color="secondary" component={Link} to="/signin">
+                            Sign In
+                        </ResponsiveButton>
+                    </div>
+                </Toolbar>
+            </AppBar>
+        </ElevationScroll>
         <div className={classes.center}>
             <main className={classes.mainContainer}>
                 <Typography variant="h1" className={classes.title}>Manage all your</Typography>

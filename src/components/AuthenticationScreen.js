@@ -15,11 +15,15 @@ import {
     Typography,
     CircularProgress,
     Link as MuiLink,
-    Toolbar
+    Toolbar,
+    InputAdornment,
+    IconButton
 } from "@material-ui/core";
 
 import { 
-    NavigateBefore
+    NavigateBefore,
+    Visibility,
+    VisibilityOff
 } from "@material-ui/icons";
 
 import ErrorSnack from "./ErrorSnack";
@@ -132,6 +136,7 @@ const AuthenticationScreen = () => {
     const [ isLoading, setLoading ] = useState(false);
     const [ redirectOnLogin, setRedirectOnLogin ] = useState(false);
     const [ connectionError, setConnectionError ] = useState(false);
+    const [ isPasswordHidden, setPasswordHidden ] = useState(true);
     const match = useRouteMatch();
 
     const onSubmit = async credentials => { 
@@ -262,9 +267,21 @@ const AuthenticationScreen = () => {
                     <TextField 
                         inputProps={{   
                             name: "password",
-                            type: "password",
+                            type: isPasswordHidden ? "password" : "text",
                             ref: register(inputValidation("Password")),
-                            "aria-autocomplete": isRegisterPage ? "" : "password"
+                            "aria-autocomplete": isRegisterPage ? "" : "password",
+                        }}
+                        InputProps={{ endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={() => setPasswordHidden(!isPasswordHidden)}
+                                onMouseDown={e => e.preventDefault()}
+                              >
+                                {isPasswordHidden ? <VisibilityOff /> : <Visibility />}
+                              </IconButton>
+                            </InputAdornment>
+                            )
                         }}
                         color="primary"
                         className={classes.input} 
@@ -279,10 +296,22 @@ const AuthenticationScreen = () => {
                         <TextField
                             inputProps={{
                                 name: "passwordRepeat",
-                                type: "password",
+                                type: isPasswordHidden ? "password" : "text",
                                 ref: register({
                                     validate: value => (value === getValues("password") || "Passwords don't match")
                                 })
+                            }}
+                            InputProps={{ endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() => setPasswordHidden(!isPasswordHidden)}
+                                    onMouseDown={e => e.preventDefault()}
+                                  >
+                                    {isPasswordHidden ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+                                )
                             }}
                             color="primary"
                             className={classes.input}
