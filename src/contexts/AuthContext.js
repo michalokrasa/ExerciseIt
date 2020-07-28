@@ -1,66 +1,71 @@
+import React, { useState, createContext, useContext } from "react";
 
-import React from 'react';
+const AuthContext = createContext();
 
-const AuthContext = React.createContext();
-
-const AUTH_INITIAL_STATE = {
-    isAuthenticated: false,
-    user: '',
-    id: '',
-    accessToken: '',
-    refreshToken: ''
-};
-
-const authContextReducer = (state, action) => {
-    switch (action.type) {
-        case 'LOGIN':
-            localStorage.setItem('user', JSON.stringify(action.payload.user));
-            localStorage.setItem('userId', JSON.stringify(action.payload.id));
-            localStorage.setItem('accessToken', JSON.stringify(action.payload.accessToken));
-            localStorage.setItem('refreshToken', JSON.stringify(action.payload.refreshToken));
-            return {
-                ...state,
-                isAuthenticated: true,
-                user: action.payload.user,
-                id: action.payload.id,
-            };
-        case 'RELOG':
-            return {
-                ...state,
-                isAuthenticated: true,
-                user: action.payload.user,
-                id: action.payload.id,
-            };
-        case 'LOGOUT':
-            localStorage.clear();
-            return {
-                ...state,
-                ...AUTH_INITIAL_STATE
-            };
-        default:
-            throw new Error(`Unhandled action type: ${action.type}`);
-    }
-};
-
-const useAuthContext = () => {
-    const context = React.useContext(AuthContext);
+const useAuth = () => {
+    const context = useContext(AuthContext);
     if (context === undefined) {
-        throw new Error('useAuthContext must be used within a AuthContextProvider');
+        throw new Error("useAuth must be used within a AuthProvider");
     }
 
-    return [context.authState, context.authDispatch];
+    return [
+        context.authState, 
+        context.setAuthState, 
+        context.isAuthenticated, 
+        context.logout
+    ];
 }
 
-const AuthContextProvider = ({ children }) => {
-    const [authState, authDispatch] = React.useReducer(authContextReducer, AUTH_INITIAL_STATE);
+const AuthProvider = ({ children }) => {
+    const accessToken = localStorage.getItem("accessToken");
+    const expiresAt = localStorage.getItem("expiresAt");
+    const userInfo = localStorage.getItem("userInfo");
+    const [ authState, setAuthState ] = useState({
+        accessToken,
+        expiresAt,
+        userInfo: userInfo ? JSON.parse(userInfo) : {}
+    });
+
+    const setAuthInfo = ({ accessToken, userInfo, expiresAt }) => {
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        localStorage.setItem("expiresAt", expiresAt);
+        setAuthState({
+            accessToken,
+            userInfo,
+            expiresAt
+        });
+    };
+
+    const isAuthenticated = () => {
+        if (!authState.accessToken || !authState.expiresAt) {
+            return false;
+        }
+
+        return new Date().getTime() / 1000 < authState.expiresAt;
+    };
+
+    const logout = () => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("userInfo");
+        localStorage.removeItem("expiresAt");
+        setAuthState({
+            accessToken: null,
+            expiresAt: null,
+            userInfo: {}
+        });
+    };
+
     return (
         <AuthContext.Provider value={{
             authState,
-            authDispatch
+            setAuthState: authInfo => setAuthInfo(authInfo),
+            isAuthenticated,
+            logout
         }}>
             {children}
         </AuthContext.Provider>
     )
 }
 
-export { AuthContextProvider, AUTH_INITIAL_STATE, useAuthContext };
+export { AuthProvider, useAuth };

@@ -14,6 +14,7 @@ import {
 import {
     AccountCircle
 } from "@material-ui/icons";
+import { useAuth } from "../contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -40,10 +41,15 @@ const CustomAppBar = () => {
     const classes = useStyles();
     const [anchorAccountMenu, setAnchorAccountMenu] = React.useState(null);
     const menuOpen = Boolean(anchorAccountMenu);
+    const [ authState,,, logout ] = useAuth();
 
     const handleClose = () => {
         setAnchorAccountMenu(null);
     };
+
+    const handleLogout = () => {
+        logout();
+    }
 
     return (
         <AppBar className={classes.appBar} position="fixed">
@@ -56,7 +62,7 @@ const CustomAppBar = () => {
                 </Typography>
                 <div className={classes.accountToolbar}>
                     <Typography variant="h5">
-                        Hi Balbo!
+                        Hi {authState.userInfo.username}!
                     </Typography>
                     <IconButton aria-controls="account-menu" aria-haspopup="true" onClick={event => setAnchorAccountMenu(event.currentTarget)}>
                         <AccountCircle className={classes.accountIcon} />
@@ -74,7 +80,7 @@ const CustomAppBar = () => {
                     >
                         <MenuItem onClick={handleClose}>Profile</MenuItem>
                         <MenuItem onClick={handleClose}>Settings</MenuItem>
-                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                 </div>
             </Toolbar>

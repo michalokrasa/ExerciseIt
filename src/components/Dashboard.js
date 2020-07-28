@@ -1,15 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import SideDrawer from './SideDrawer';
-import CustomAppBar from './AppBar';
+import SideDrawer from "./SideDrawer";
+import CustomAppBar from "./CustomAppBar";
 
 import {
-    CssBaseline,
     Typography, 
     Paper, 
     makeStyles,
     Toolbar
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,23 +24,21 @@ const Dashboard = props => {
     const classes = useStyles();
 
     return (
-        <CssBaseline>
-            <div className={classes.root}>
-                <CustomAppBar/>
-                <SideDrawer/>
-                <main className={classes.content}>
-                    <Toolbar/>
-                    <Typography variant="h4" gutterBottom>
-                            Let's go!!!
+        <div className={classes.root}>
+            <CustomAppBar/>
+            <SideDrawer/>
+            <main className={classes.content}>
+                <Toolbar/>
+                <Typography variant="h4" gutterBottom>
+                        Let's go!!!
+                    </Typography>
+                    <Paper>
+                        <Typography>
+                            CONTENT
                         </Typography>
-                        <Paper>
-                            <Typography>
-                                CONTENT
-                            </Typography>
-                        </Paper>
-                </main>
-            </div>
-        </CssBaseline>
+                    </Paper>
+            </main>
+        </div>
     );
 }
 
