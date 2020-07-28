@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpen } from "@fortawesome/free-solid-svg-icons";
-import { Link, Redirect, useRouteMatch } from "react-router-dom";
+import { Redirect, useRouteMatch, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { publicFetch } from "../util/publicFetch";
 import { useAuth } from "../contexts/AuthContext";
@@ -14,7 +14,13 @@ import {
     Button,
     Typography,
     CircularProgress,
+    Link as MuiLink,
+    Toolbar
 } from "@material-ui/core";
+
+import { 
+    NavigateBefore
+} from "@material-ui/icons";
 
 import ErrorSnack from "./ErrorSnack";
 import tinycolor from "tinycolor2";
@@ -35,13 +41,13 @@ const useStyles = makeStyles(theme => ({
         "flexWrap": "wrap",
         "justifyContent": "space-around",
         "alignItems": "center",
-        "backgroundColor": theme.palette.grey["300"],
+        "backgroundColor": theme.palette.grey["100"],
         [theme.breakpoints.up("md")]: {
             "width": "750px"
         }
     },
     "logo": {
-        "fontSize": "100px",
+        "fontSize": "150px",
         "display": "block",
         "padding": theme.spacing(2),
         "color": theme.palette.secondary.main,
@@ -69,7 +75,10 @@ const useStyles = makeStyles(theme => ({
     },
     "text": {
         "margin": theme.spacing(1),
-        "color": theme.palette.grey["800"]
+        "color": theme.palette.grey["800"],
+        [theme.breakpoints.down("xs")]: {
+            "fontSize": "0.8rem"
+        }
     },
     "errorMessage": {
         "color": "red",
@@ -106,6 +115,12 @@ const useStyles = makeStyles(theme => ({
         "marginTop": "-12px",
         "marginLeft": "-12px",
       },
+    "homeButtonWrapper": {
+        "flex": "0 0 100%"
+    },
+    "toolbarWrap" : {
+        "flexWrap": "wrap" 
+    }
 }));
 
 const AuthenticationScreen = () => {
@@ -196,6 +211,16 @@ const AuthenticationScreen = () => {
         </ErrorSnack>
         <div className={classes.center}>
             <Paper className={classes.mainContainer}>
+                <div className={classes.homeButtonWrapper}>
+                    <Button
+                        color="secondary"
+                        startIcon={<NavigateBefore/>}
+                        component={Link}
+                        to="/"
+                    >
+                        Home Page
+                    </Button>
+                </div>
                 <FontAwesomeIcon className={classes.logo} icon={faBookOpen}/>
                 <form className={classes.formContainer} onSubmit={handleSubmit(onSubmit)}>
                     { isRegisterPage &&
@@ -292,10 +317,20 @@ const AuthenticationScreen = () => {
                         </Button>
                         {isLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
                     </div>
-                    <Typography className={classes.text}>
-                        {isRegisterPage ? "Already registered?" : "Not registered yet?"}
-                    </Typography>
-                    <Button 
+                    <Toolbar classes={{ root: classes.toolbarWrap}}>
+                        <Typography className={classes.text}>
+                            {isRegisterPage ? "Already registered?" : "Not registered yet?"}
+                        </Typography>
+                        <MuiLink
+                            //className={classes.text}
+                            component={Link}
+                            to={isRegisterPage ? "/signin" : "/signup"}
+                            onClick={()=>setSubmitError("")}
+                        >
+                            {isRegisterPage ? "Sign In" : "Sign Up"}
+                        </MuiLink>
+                    </Toolbar>
+                    {/* <Button 
                         className={classes.button} 
                         classes={{root: classes.icon}} 
                         variant="contained" 
@@ -305,8 +340,8 @@ const AuthenticationScreen = () => {
                         onClick={()=>setSubmitError("")}
                     >
                         {isRegisterPage ? "Sign In" : "Sign Up"}
-                    </Button>
-                    <Button 
+                    </Button> */}
+                    {/* <Button 
                         className={classes.button} 
                         classes={{root: classes.icon}} 
                         variant="contained" 
@@ -315,7 +350,7 @@ const AuthenticationScreen = () => {
                         to="/"
                     >
                         Home Page
-                    </Button>
+                    </Button> */}
                 </form>
             </Paper>
             <Background/>

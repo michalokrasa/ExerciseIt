@@ -10,7 +10,7 @@ import { FetchProvider } from "./contexts/FetchContext";
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: "#BDCCFF"
+            main: "#7c95e6" //"#BDCCFF"
         },
         secondary: {
             main: "#7EB3FF"
