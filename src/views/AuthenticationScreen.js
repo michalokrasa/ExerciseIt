@@ -5,7 +5,7 @@ import { Redirect, useRouteMatch, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { publicFetch } from "../util/publicFetch";
 import { useAuth } from "../contexts/AuthContext";
-import Background from "./Background"; 
+import Background from "../components/Background"; 
 
 import { 
     makeStyles,
@@ -26,7 +26,7 @@ import {
     VisibilityOff
 } from "@material-ui/icons";
 
-import ErrorSnack from "./ErrorSnack";
+import ErrorSnack from "../components/ErrorSnack";
 import tinycolor from "tinycolor2";
 
 // TODO: Add axios-retry
@@ -181,7 +181,7 @@ const AuthenticationScreen = () => {
                 setConnectionError(true);
             }
             else {
-                console.error("Uhh ohh! Sth went a bit sideways...");
+                console.error("Uhh ohh! Something went a bit sideways...");
                 console.error(error);
             }
           }
@@ -359,27 +359,6 @@ const AuthenticationScreen = () => {
                             {isRegisterPage ? "Sign In" : "Sign Up"}
                         </MuiLink>
                     </Toolbar>
-                    {/* <Button 
-                        className={classes.button} 
-                        classes={{root: classes.icon}} 
-                        variant="contained" 
-                        color="secondary"
-                        component={Link}
-                        to={isRegisterPage ? "/signin" : "/signup"}
-                        onClick={()=>setSubmitError("")}
-                    >
-                        {isRegisterPage ? "Sign In" : "Sign Up"}
-                    </Button> */}
-                    {/* <Button 
-                        className={classes.button} 
-                        classes={{root: classes.icon}} 
-                        variant="contained" 
-                        color="secondary"
-                        component={Link}
-                        to="/"
-                    >
-                        Home Page
-                    </Button> */}
                 </form>
             </Paper>
             <Background/>

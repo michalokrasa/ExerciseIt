@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useRouteMatch } from "react-router-dom";
 
 import {
     Toolbar,
@@ -7,13 +8,19 @@ import {
     List,
     ListItem,
     ListItemIcon,
-    ListItemText
+    ListItemText,
+    Collapse
 } from "@material-ui/core";
 
 import { 
     MenuBook,
     Bookmark,
-    Folder
+    Folder,
+    ExpandLess,
+    ExpandMore,
+    YouTube,
+    Link as LinkIcon,
+    CollectionsBookmark
 } from "@material-ui/icons";
 
 const drawerWidth = 240;
@@ -28,17 +35,37 @@ const useStyles = makeStyles((theme) => ({
     },
     container: {
         overflow: "auto"
-    }
+    },
+    nested: {
+        paddingLeft: theme.spacing(4),
+        
+    },
 }));
 
-const drawerItems = {
-    "In progress": Bookmark,
-    "Library": MenuBook,
-    "Skillsets": Folder
+const libraryItems = {
+    YouTube: { 
+        Icon: YouTube, 
+        url: "youtube" 
+    },
+    Books: { 
+        Icon: MenuBook,
+        url: "books" 
+    },
+    Externals: { 
+        Icon: LinkIcon,
+        url: "externals"
+    }
 }
 
-const SourcesTab = () => {
+const SideDrawer = () => {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+
+    const match = useRouteMatch();
+
+    const handleClick = () => {
+        setOpen(!open);
+    };
 
     return (
         <Drawer
@@ -50,22 +77,52 @@ const SourcesTab = () => {
         >
             <Toolbar/>
             <div className={classes.container}>
-                <List>
-                    {Object.keys(drawerItems).map((item) => {
-                        const Icon = drawerItems[item];
-                        return (
-                            <ListItem button key={item}>
-                                <ListItemIcon >
-                                    <Icon/>
-                                </ListItemIcon>
-                                <ListItemText primary={item}/>
-                            </ListItem>
-                        )
-                    })}
+                <List
+                    component="nav"
+                    aria-labelledby="side-drawer"
+                >
+                    <ListItem button component={Link} to={`${match.url}`}>
+                        <ListItemIcon>
+                            <Bookmark />
+                        </ListItemIcon>
+                        <ListItemText primary="In progress" />
+                    </ListItem>
+                    <ListItem button onClick={handleClick}>
+                        <ListItemIcon>
+                            <CollectionsBookmark />
+                        </ListItemIcon>
+                        <ListItemText primary="Library" />
+                        {open ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <List component="div" disablePadding>
+                            {Object.keys(libraryItems).map((item) => {
+                                const { Icon, url } = libraryItems[item];
+                                return (
+                                    <ListItem button key={item} 
+                                        className={classes.nested}
+                                        component={Link} 
+                                        to={`${match.url}/${url}`}
+                                    >
+                                        <ListItemIcon >
+                                            <Icon/>
+                                        </ListItemIcon>
+                                        <ListItemText primary={item}/>
+                                    </ListItem>
+                                )
+                            })}
+                        </List>
+                    </Collapse>
+                    <ListItem button component={Link} to={`${match.url}/skillsets`}>
+                        <ListItemIcon>
+                            <Folder />
+                        </ListItemIcon>
+                        <ListItemText primary="Skillsets" />
+                    </ListItem>
                 </List>
             </div>
         </Drawer>
     );
 };
 
-export default SourcesTab;
+export default SideDrawer;

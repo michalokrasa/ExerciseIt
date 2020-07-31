@@ -1,10 +1,10 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import Home from "./Home";
-import AuthenticationScreen from "./AuthenticationScreen";
-import PrivateRoute from "./PrivateRoute";
-import { useAuth } from "../contexts/AuthContext";
-const Dashboard = lazy(() => import("./Dashboard"));
+import PrivateRoute from "./components/PrivateRoute";
+import { useAuth } from "./contexts/AuthContext";
+import Home from "./views/Home";
+import AuthenticationScreen from "./views/AuthenticationScreen";
+const Dashboard = lazy(() => import("./views/Dashboard"));
 
 const App = props => {
     const [ ,, isAuthenticated ] = useAuth();
